@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <ul id="llista"></ul>
+</body>
+
+<script>
+    let data = {
+        catActive: 0,
+        gatos: [
+            { name: "Michifu",  image: "img/cat1.jpg", nclicks: 0 },
+            { name: "Minino",  image: "img/cat2.jpg", nclicks: 0 },
+            { name: "Garfield",  image: "img/cat3.jpg", nclicks: 0 },
+            { name: "LindoGatito", image: "img/cat4.jpg", nclicks: 0 }
+        ]
+    };
+
+    function mostrarGat(id){
+
+    }
+
+
+    //CONSTRUEIXO UNA LLISTA DINAMICA DE NOMS
+
+    htmlStr=""
+    data.gatos.forEach((element,index) => {       
+        htmlStr += `<li id='${index}'>${element.name}</li>`    
+    });
+    document.getElementById("llista").innerHTML=htmlStr;
+
+/*
+    Versió amb for tradicional, que es un amica mes llarga
+    for (let index = 0; index < data.gatos.length; index++) {
+        const element = data.gatos[index];
+        htmlStr += `<li>${element.name}</li>`        
+    }
+    document.getElementById("llista").innerHTML=htmlStr;
+
+*/
+ 
+    //AFEGEIXO UN LISTENER AMB DELEGACIO D'EVENTS ALS NOMS
+    document.getElementById("llista").addEventListener("click",function(e){
+        console.log("has aperetat al gat" + e.target.id)
+
+    })
+
+    //AFEGEIXO UN LISTENER AL GAT
+
+    
+</script>
+</html>
