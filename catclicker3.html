@@ -7,6 +7,10 @@
 </head>
 <body>
     <ul id="llista"></ul>
+    <img id="imgGat" src="" alt="">
+    <h3 id="nomActual"></h3>
+    <h3 id="contActual"></h3>
+    
 </body>
 
 <script>
@@ -21,6 +25,11 @@
     };
 
     function mostrarGat(id){
+        //ACTUALITZO EL ID perque ho farem servir despres!!
+        data.catActive=id
+        document.getElementById("imgGat").src=data.gatos[id].image
+        document.getElementById("nomActual").innerHTML=data.gatos[id].name;
+        document.getElementById("contActual").innerHTML=data.gatos[id].nclicks;
 
     }
 
@@ -45,11 +54,17 @@
  
     //AFEGEIXO UN LISTENER AMB DELEGACIO D'EVENTS ALS NOMS
     document.getElementById("llista").addEventListener("click",function(e){
-        console.log("has aperetat al gat" + e.target.id)
+        console.log("has apretat al gat en la llista" + e.target.id)
+        mostrarGat(e.target.id)
 
     })
 
     //AFEGEIXO UN LISTENER AL GAT
+    document.getElementById("imgGat").addEventListener("click",function(){
+      data.gatos[data.catActive].nclicks++;
+      //mostrarGat(data.catActive)
+        document.getElementById("contActual").innerHTML=data.gatos[data.catActive].nclicks;
+    })
 
     
 </script>
