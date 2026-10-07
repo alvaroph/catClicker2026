@@ -10,9 +10,7 @@
     <img id="imgGat" src="" alt="">
     <h3 id="nomActual"></h3>
     <h3 id="contActual"></h3>
-    
 </body>
-
 <script>
 
 let data = {
@@ -36,15 +34,31 @@ let data = {
         },
         getGatoActual: function(){
             return data.gatos[data.catActive];
+        },
+        canviGat: function(id){
+            data.catActive=id;
+        },
+        clickGato: function(){
+            data.gatos[data.catActive].nclicks++;
         }
     };
 
-
     let controller = {
+        canviGat: function(id){
+            //Actualitzo les dades
+            model.canviGat(id);
+            //Repinto
+            view.renderGatoActual();
+        },
+        clickGato:function(){
+            //actualitzo les dades
+            model.clickGato();
+            //repinto
+            view.renderGatoActual();
+        },
         getGatos: function() {           
             return model.getGatos();
         },
-     
         getGatoActual: function(){
             return model.getGatoActual();
         },
@@ -54,11 +68,16 @@ let data = {
         }
     };
 
-
     let view = {
         init: function() {
             view.renderLlista();
             view.renderGatoActual(); 
+
+            //AFEGEIXO UN LISTENER AL GAT
+            document.getElementById("imgGat").addEventListener("click",function(){
+                controller.clickGato();                
+            })
+
         },
         renderLlista: function(){
             let datos=controller.getGatos();
@@ -68,14 +87,17 @@ let data = {
                 });
                 document.getElementById("llista").innerHTML=htmlStr;
 
+                 document.getElementById("llista").addEventListener("click",function(e){
+                    console.log("has apretat al gat en la llista" + e.target.id)
+                    controller.canviGat(e.target.id)
+                })
         },
         renderGatoActual: function(){
             let datosGatoActual =  controller.getGatoActual();
             document.getElementById("imgGat").src=datosGatoActual.image
             document.getElementById("nomActual").innerHTML=datosGatoActual.name;
             document.getElementById("contActual").innerHTML=datosGatoActual.nclicks;
-        }
-
+        },
 
     
     };
@@ -87,15 +109,7 @@ let data = {
 /*
     
 
-    function mostrarGat(id){
-        //ACTUALITZO EL ID perque ho farem servir despres!!
-        data.catActive=id
-        document.getElementById("imgGat").src=data.gatos[id].image
-        document.getElementById("nomActual").innerHTML=data.gatos[id].name;
-        document.getElementById("contActual").innerHTML=data.gatos[id].nclicks;
-
-    }
-
+ 
     //CONSTRUEIXO UNA LLISTA DINAMICA DE NOMS
     
 
@@ -109,12 +123,6 @@ let data = {
 
 
  
-    //AFEGEIXO UN LISTENER AMB DELEGACIO D'EVENTS ALS NOMS
-    document.getElementById("llista").addEventListener("click",function(e){
-        console.log("has apretat al gat en la llista" + e.target.id)
-        mostrarGat(e.target.id)
-
-    })
 
     //AFEGEIXO UN LISTENER AL GAT
     document.getElementById("imgGat").addEventListener("click",function(){
